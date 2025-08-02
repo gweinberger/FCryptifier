@@ -1,10 +1,11 @@
-<img alt="Platform-Windows" src="https://img.shields.io/badge/platforms-Windows-blue?style=flat-square"/>
-<img alt="Platform-Linux" src="https://img.shields.io/badge/platforms-Linux-blue?style=flat-square"/>
-<img alt="Platform-MacOS" src="https://img.shields.io/badge/platforms-MacOS-blue?style=flat-square"/>
-<br>
-<img alt="Language" src="https://img.shields.io/badge/Programming-C%23-green?logo=csharp"/>
-<img alt="Framework" src="https://img.shields.io/badge/Framework-.NET8-green"/>
-
+<p float="left">
+    <img alt="Platform-Windows" src="https://img.shields.io/badge/platforms-Windows-blue?style=flat-square"/>
+    <img alt="Platform-Linux" src="https://img.shields.io/badge/platforms-Linux-blue?style=flat-square"/>
+    <img alt="Platform-MacOS" src="https://img.shields.io/badge/platforms-MacOS-blue?style=flat-square"/>
+    <br>
+    <img alt="Language" src="https://img.shields.io/badge/Programming-C%23-green?logo=csharp"/>
+    <img alt="Framework" src="https://img.shields.io/badge/Framework-.NET8-green"/>
+</p>
 
 # FCryptifier
 FCryptifier is an easy-to-use console program that encrypts and decrypts files using the AES algorithm.
