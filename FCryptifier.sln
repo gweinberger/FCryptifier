@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FCryptifier", "FCryptifier\FCryptifier.csproj", "{DF710316-9916-489B-B12C-C5C7E0D609C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FCryptifierWinUI", "FCryptifierWinUI\FCryptifierWinUI.csproj", "{3CE0CFD3-D858-4D9B-B8BD-DAC62F7BAB97}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF710316-9916-489B-B12C-C5C7E0D609C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF710316-9916-489B-B12C-C5C7E0D609C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF710316-9916-489B-B12C-C5C7E0D609C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF710316-9916-489B-B12C-C5C7E0D609C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CE0CFD3-D858-4D9B-B8BD-DAC62F7BAB97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CE0CFD3-D858-4D9B-B8BD-DAC62F7BAB97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CE0CFD3-D858-4D9B-B8BD-DAC62F7BAB97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CE0CFD3-D858-4D9B-B8BD-DAC62F7BAB97}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
