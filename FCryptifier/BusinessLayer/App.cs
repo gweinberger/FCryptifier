@@ -4,13 +4,13 @@ namespace FCryptifier;
 internal class App(string[] args)
 {
     [DllImport("KERNEL32.DLL", EntryPoint = "RtlZeroMemory")]
-    private static extern bool ZeroMemory(IntPtr Destination, int Length);
+    private static extern bool ZeroMemory(IntPtr destination, int length);
 
     public void Run()
     {
         try
         {
-            Utils.printHeader();
+            Utils.PrintHeader();
             
             var appOption = new CommandlineParser.AppOptions();
             CommandlineParser parser = new(args);
@@ -20,7 +20,7 @@ internal class App(string[] args)
             }
             catch
             {
-                Utils.printUsageInfo();
+                Utils.PrintUsageInfo();
                 Environment.Exit(1);
             }
 

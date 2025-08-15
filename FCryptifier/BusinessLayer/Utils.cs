@@ -4,24 +4,24 @@ namespace FCryptifier;
 
 internal static class Utils
 {
-    private const string AUTHOR = "Gerald Weinberger";
-    private const string AUTHOR_EMAIL = "g.weinberger@outlook.com";
-    private const string AUTHOR_WEB = "https://github.com/gweinberger/FCryptifier";
-    private const int DEV_YEAR = 2025;
+    private const string Author = "Gerald Weinberger";
+    private const string AuthorEmail = "g.weinberger@outlook.com";
+    private const string AuthorWeb = "https://github.com/gweinberger/FCryptifier";
+    private const int DevYear = 2025;
 
-    internal static void printHeader()
+    internal static void PrintHeader()
     {
         Console.ForegroundColor = ConsoleColor.Magenta;
         Console.WriteLine("");
         Console.WriteLine(Assembly.GetExecutingAssembly()?.GetName().Name + " " + Assembly.GetEntryAssembly()?.GetName().Version);
         Console.ResetColor();
         Console.WriteLine("-------------------------------------------------------------------------------");
-        Console.WriteLine($"(c){(DateTime.Now.Year > DEV_YEAR ? DEV_YEAR + "-" : "")}{DateTime.Now.Year} {AUTHOR} | {AUTHOR_EMAIL}");
-        Console.WriteLine($"{AUTHOR_WEB}");
+        Console.WriteLine($"(c){(DateTime.Now.Year > DevYear ? DevYear + "-" : "")}{DateTime.Now.Year} {Author} | {AuthorEmail}");
+        Console.WriteLine($"{AuthorWeb}");
         Console.WriteLine("-------------------------------------------------------------------------------");
     }
 
-    internal static void printUsageInfo()
+    internal static void PrintUsageInfo()
     {
         Console.WriteLine("");
         Console.WriteLine("Usage:");

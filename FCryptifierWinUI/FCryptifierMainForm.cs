@@ -1,4 +1,5 @@
-﻿using FCryptifier;
+﻿using System.Reflection;
+using FCryptifier;
 using System.Runtime.InteropServices;
 
 namespace FCryptifierUI;
@@ -6,14 +7,14 @@ namespace FCryptifierUI;
 public partial class FCryptifierMainForm : Form
 {
     [DllImport("KERNEL32.DLL", EntryPoint = "RtlZeroMemory")]
-    private static extern bool ZeroMemory(IntPtr Destination, int Length);
+    private static extern bool ZeroMemory(IntPtr destination, int length);
     
-    private const string AUTHOR = "Gerald Weinberger";
-    private const string AUTHOR_EMAIL = "g.weinberger@outlook.com";
-    private const string AUTHOR_WEB = "https://github.com/gweinberger/FCryptifier";
-    private const int DEV_YEAR = 2025;
+    private const string Author = "Gerald Weinberger";
+    private const string AuthorEmail = "g.weinberger@outlook.com";
+    private const string AuthorWeb = "https://github.com/gweinberger/FCryptifier";
+    private const int DevYear = 2025;
 
-    private int pwdCount = 0;
+    private int pwdCount;
 
     private List<string> filelist = new List<string>();
     public FCryptifierMainForm()
@@ -39,11 +40,9 @@ public partial class FCryptifierMainForm : Form
             RestoreDirectory = true,
             Multiselect = true
         };
-        if (ofd.ShowDialog() == DialogResult.OK)
-        {
-            filelist = ofd.FileNames.ToList();
-            showPassword();
-        }
+        if (ofd.ShowDialog() != DialogResult.OK) return;
+        filelist = ofd.FileNames.ToList();
+        showPassword();
     }
 
     private void cmdSelectFile_DragOver(object sender, DragEventArgs e)
@@ -67,6 +66,7 @@ public partial class FCryptifierMainForm : Form
         }
         catch
         {
+            // ignored
         }
     }
 
@@ -110,7 +110,7 @@ public partial class FCryptifierMainForm : Form
 
     private void lblInfo_Click(object sender, EventArgs e)
     {
-        MessageBox.Show($"Version {Application.ProductVersion}{Environment.NewLine}{Environment.NewLine}©{(DateTime.Now.Year > DEV_YEAR ? DEV_YEAR + "-" : "")}{DateTime.Now.Year} {AUTHOR}{Environment.NewLine}{AUTHOR_EMAIL}{Environment.NewLine}{AUTHOR_WEB}", "FCryptifier");
+        MessageBox.Show($"Version {Assembly.GetExecutingAssembly().GetName().Version?.ToString()}{Environment.NewLine}{Environment.NewLine}©{(DateTime.Now.Year > DevYear ? DevYear + "-" : "")}{DateTime.Now.Year} {Author}{Environment.NewLine}{AuthorEmail}{Environment.NewLine}{AuthorWeb}", "FCryptifier");
     }
 
     private bool isFileToEncrypt(string filename)
