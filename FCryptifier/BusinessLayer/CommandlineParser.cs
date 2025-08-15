@@ -4,7 +4,7 @@ internal class CommandlineParser(string[] args)
 {
     internal class AppOptions
     {
-        internal bool Encrypt { get; set; } = false;
+        internal bool Encrypt { get; set; }
         internal string InputFile { get; set; } = string.Empty;
         internal string OutputFile { get; set; } = string.Empty;
         internal string Password { get; set; } = string.Empty;
