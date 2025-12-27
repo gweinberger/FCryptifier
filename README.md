@@ -49,3 +49,6 @@ fcryptifier -e -f file.txt -p 1234
 # Example: decrypt secure.txt.aes with passwordfile pass.dat
 fcryptifier -d -f secure.txt.aes -pf pass.dat
 ```
+
+## Screenhot
+<img width="500" height="243" alt="Screenshot 2025-12-27 151852" src="https://github.com/user-attachments/assets/69ceb790-9f09-4815-88ea-1988133ed730" />
