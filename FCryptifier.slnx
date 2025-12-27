@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="FCryptifier/FCryptifier.csproj" />
+  <Project Path="FCryptifierWinUI/FCryptifierWinUI.csproj" />
+</Solution>
