@@ -5,9 +5,14 @@ namespace FCryptifier;
 
 public class Crypto(bool preventConsoleColor = false, bool propagateExceptions = false)
 {
+    public event Action<long, long>? FileProgress;
+    private void RaiseFileProgress(long read, long total) => FileProgress?.Invoke(read, total);
+    
     public bool FileEncrypt(string inputFile, string outputFile, string password)
     {
         bool result = true;
+        long totalBytes = new FileInfo(inputFile).Length;
+        long processedBytes = 0;
 
         // generate Salt
         RandomNumberGenerator rng = RandomNumberGenerator.Create();
@@ -41,6 +46,8 @@ public class Crypto(bool preventConsoleColor = false, bool propagateExceptions =
             while ((read = fsIn.Read(buffer, 0, buffer.Length)) > 0)
             {
                 cs.Write(buffer, 0, read);
+                processedBytes += read;
+                RaiseFileProgress(processedBytes, totalBytes);
             }
             fsIn.Close();
         }
@@ -63,7 +70,9 @@ public class Crypto(bool preventConsoleColor = false, bool propagateExceptions =
     public bool FileDecrypt(string inputFile, string outputFile, string password)
     {
         bool result = true;
-        
+        long totalBytes = new FileInfo(inputFile).Length;
+        long processedBytes = 0;
+
         byte[] passwordBytes = System.Text.Encoding.UTF8.GetBytes(password);
         byte[] salt = new byte[32];
 
@@ -91,6 +100,8 @@ public class Crypto(bool preventConsoleColor = false, bool propagateExceptions =
             while ((read = cs.Read(buffer, 0, buffer.Length)) > 0)
             {
                 fsOut.Write(buffer, 0, read);
+                processedBytes += read;
+                RaiseFileProgress(processedBytes, totalBytes);
             }
         }
         catch (CryptographicException exCryptographicException)
@@ -98,6 +109,7 @@ public class Crypto(bool preventConsoleColor = false, bool propagateExceptions =
             if (propagateExceptions) throw;
             if (!preventConsoleColor) Console.ForegroundColor = ConsoleColor.Red;
             Debug.WriteLine(exCryptographicException.Message);
+            Console.WriteLine("");
             Console.WriteLine($"Wrong Password");
             if (!preventConsoleColor) Console.ResetColor();
             result = false;
@@ -106,6 +118,7 @@ public class Crypto(bool preventConsoleColor = false, bool propagateExceptions =
         {
             if (propagateExceptions) throw;
             if (!preventConsoleColor) Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("");
             Console.WriteLine("Error: " + ex.Message);
             if (!preventConsoleColor) Console.ResetColor();
             result = false;
@@ -118,6 +131,7 @@ public class Crypto(bool preventConsoleColor = false, bool propagateExceptions =
         {
             if (propagateExceptions) throw;
             if (!preventConsoleColor) Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("");
             Console.WriteLine("Error by closing CryptoStream: " + ex.Message);
             if (!preventConsoleColor) Console.ResetColor();
             result = false;

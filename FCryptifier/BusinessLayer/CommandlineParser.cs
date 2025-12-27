@@ -8,6 +8,7 @@ internal class CommandlineParser(string[] args)
         internal string InputFile { get; set; } = string.Empty;
         internal string OutputFile { get; set; } = string.Empty;
         internal string Password { get; set; } = string.Empty;
+        internal bool Silent { get; set; }
     }
 
     internal AppOptions ParseArguments()
@@ -26,11 +27,12 @@ internal class CommandlineParser(string[] args)
         }
 
         options.Encrypt = argDict.ContainsKey("-e");
+        options.Silent = argDict.ContainsKey("-s");
         options.InputFile = argDict.GetValueOrDefault("-f", "");
         options.Password = argDict.GetValueOrDefault("-p", "");
 
         string passwordFile = argDict.GetValueOrDefault("-pf", "");
-        if (passwordFile != "") options.Password = File.ReadAllText(passwordFile);
+        if (passwordFile != "" && new FileInfo(passwordFile).Length > 0) options.Password = File.ReadAllLines(passwordFile)[0]; //only first line without line break
 
         if (options.InputFile == "" || options.Password == "")
             throw new ArgumentException();

@@ -31,4 +31,16 @@ internal static class Utils
         Console.WriteLine($"  Example decryption with passwordfile: fcryptifier -d -f file.txt.aes -pf pass.txt");
         Console.WriteLine("");
     }
+
+    internal static void ShowProgress(int percent)
+    {
+        percent = percent > 100 ? 100 : percent;
+        percent = percent < 0 ? 0 : percent;
+        int width = 40;
+        int filled = percent * width / 100;
+        Console.Write("\r[");
+        Console.Write(new string('#', filled));
+        Console.Write(new string(' ', width - filled));
+        Console.Write($"] {percent}%");
+    }
 }
