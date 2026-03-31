@@ -50,5 +50,5 @@ fcryptifier -e -f file.txt -p 1234
 fcryptifier -d -f secure.txt.aes -pf pass.dat
 ```
 
-## Screenhot
+## Screenshot
 <img width="500" height="243" alt="Screenshot 2025-12-27 151852" src="https://github.com/user-attachments/assets/69ceb790-9f09-4815-88ea-1988133ed730" />

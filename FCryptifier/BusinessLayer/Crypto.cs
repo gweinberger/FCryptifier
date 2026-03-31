@@ -27,9 +27,8 @@ public class Crypto(bool preventConsoleColor = false, bool propagateExceptions =
         aes.BlockSize = 128;
         aes.Padding = PaddingMode.PKCS7;
 
-        Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(passwordBytes, salt, 50000, HashAlgorithmName.SHA512);
-        aes.Key = key.GetBytes(aes.KeySize / 8);
-        aes.IV = key.GetBytes(aes.BlockSize / 8);
+        aes.Key = Rfc2898DeriveBytes.Pbkdf2(passwordBytes, salt, 50000, HashAlgorithmName.SHA512, aes.KeySize / 8 );
+        aes.IV = Rfc2898DeriveBytes.Pbkdf2(passwordBytes, salt, 50000, HashAlgorithmName.SHA512, aes.BlockSize / 8);
         aes.Mode = CipherMode.CFB;
 
         // write salt to the beginning of the output file, so in this case can be random every time
@@ -83,9 +82,8 @@ public class Crypto(bool preventConsoleColor = false, bool propagateExceptions =
         aes.KeySize = 256;
         aes.BlockSize = 128;
 
-        Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(passwordBytes, salt, 50000, HashAlgorithmName.SHA512);
-        aes.Key = key.GetBytes(aes.KeySize / 8);
-        aes.IV = key.GetBytes(aes.BlockSize / 8);
+        aes.Key = Rfc2898DeriveBytes.Pbkdf2(passwordBytes, salt, 50000, HashAlgorithmName.SHA512, aes.KeySize / 8);
+        aes.IV = Rfc2898DeriveBytes.Pbkdf2(passwordBytes, salt, 50000, HashAlgorithmName.SHA512, aes.BlockSize / 8);
         aes.Padding = PaddingMode.PKCS7;
         aes.Mode = CipherMode.CFB;
 

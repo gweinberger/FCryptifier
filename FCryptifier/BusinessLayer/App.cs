@@ -28,11 +28,11 @@ internal class App(string[] args)
             GCHandle gch = GCHandle.Alloc(appOption.Password, GCHandleType.Pinned);  // pinning secret is more secure. see: https://stackoverflow.com/questions/20012534/in-c-why-is-pinning-a-secret-key-in-memory-more-secure
             Crypto cr = new Crypto();
             if (!appOption.Silent) cr.FileProgress += (read, total) => { Utils.ShowProgress(Convert.ToInt32(read * 100 / total) + 1); };
-
             bool isSuccessful = appOption.Encrypt ? cr.FileEncrypt(appOption.InputFile, appOption.OutputFile, appOption.Password) : cr.FileDecrypt(appOption.InputFile, appOption.OutputFile, appOption.Password);
             ZeroMemory(gch.AddrOfPinnedObject(), appOption.Password.Length * 2);
             gch.Free();
             GC.Collect();
+
             Console.WriteLine("");
 
             if (isSuccessful)

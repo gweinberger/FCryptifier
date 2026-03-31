@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 FCryptifier project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.1.1] - 2026-03-31
+### Changed
+- Code refactoring
+
 ## [0.9.1] - 2025-12-27
 ### Changed
 - Upgrade to .NET 10
