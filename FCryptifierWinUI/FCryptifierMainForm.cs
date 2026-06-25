@@ -8,7 +8,7 @@ public partial class FCryptifierMainForm : Form
 {
     [DllImport("KERNEL32.DLL", EntryPoint = "RtlZeroMemory")]
     private static extern bool ZeroMemory(IntPtr destination, int length);
-    
+
     private const string Author = "Gerald Weinberger";
     private const string AuthorEmail = "g.weinberger@outlook.com";
     private const string AuthorWeb = "https://github.com/gweinberger/FCryptifier";
@@ -81,8 +81,17 @@ public partial class FCryptifierMainForm : Form
 
     private void txtPWD_KeyUp(object sender, KeyEventArgs e)
     {
+        const int minPasswordLength = 6;
+
         if (e.KeyCode == Keys.Enter && txtPWD.Text.Length > 0)
         {
+            if (txtPWD.Text.Length < minPasswordLength)
+            {
+                resetUI();
+                MessageBox.Show($"Password must be at least {minPasswordLength} characters long.", "Password too short", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
             if (isFileToEncrypt(filelist[0]))
             {
                 if (pwdCount == 0)
@@ -94,8 +103,8 @@ public partial class FCryptifierMainForm : Form
                     showPassword();
                     return;
                 }
-                else 
-                { 
+                else
+                {
                     if (txtPWD.Text != txtPWD.Tag?.ToString())
                     {
                         resetUI();
@@ -132,11 +141,13 @@ public partial class FCryptifierMainForm : Form
     private void proceed()
     {
         if (filelist.Count == 0) return;
+        GCHandle gch = default;
+        string password = string.Empty;
         try
         {
 
             bool isSuccessful = false;
-            string password = txtPWD.Text;
+            password = txtPWD.Text;
             string outputFilename = "";
             txtPWD.Visible = false;
             lblPWD.Visible = false;
@@ -144,7 +155,7 @@ public partial class FCryptifierMainForm : Form
             txtPWD.Tag = "";
             Application.DoEvents();
 
-            GCHandle gch = GCHandle.Alloc(password, GCHandleType.Pinned);  // pinning secret is more secure. see: https://stackoverflow.com/questions/20012534/in-c-why-is-pinning-a-secret-key-in-memory-more-secure
+            gch = GCHandle.Alloc(password, GCHandleType.Pinned);  // pinning secret is more secure. see: https://stackoverflow.com/questions/20012534/in-c-why-is-pinning-a-secret-key-in-memory-more-secure
             foreach (string file in filelist)
             {
                 bool encrypt = isFileToEncrypt(file);
@@ -167,14 +178,12 @@ public partial class FCryptifierMainForm : Form
                 Crypto cr = new(false, true);
                 isSuccessful = encrypt ? cr.FileEncrypt(file, outputFilename, password) : cr.FileDecrypt(file, outputFilename, password);
             }
-            password = "";
-            ZeroMemory(gch.AddrOfPinnedObject(), password.Length * 2);
-            gch.Free();
-            GC.Collect();
 
             if (isSuccessful)
             {
-                MessageBox.Show($"Successfully completed.{Environment.NewLine}{(filelist.Count == 1 ? "File decrypted: " + outputFilename : "Files decrypted in " + Path.GetDirectoryName(outputFilename))}", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Successfully completed.{Environment.NewLine}" +
+                                $"{(filelist.Count == 1 ? "File decrypted: " + outputFilename : "Files decrypted in " + Path.GetDirectoryName(outputFilename))}",
+                                "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
@@ -194,6 +203,13 @@ public partial class FCryptifierMainForm : Form
         }
         finally
         {
+            // Clear password from memory BEFORE freeing the handle
+            if (gch.IsAllocated)
+            {
+                ZeroMemory(gch.AddrOfPinnedObject(), password.Length * 2);
+                gch.Free();
+            }
+            GC.Collect();
             resetUI();
         }
     }
